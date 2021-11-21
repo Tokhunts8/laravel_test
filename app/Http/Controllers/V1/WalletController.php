@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\V1;
 
+use App\Http\Controllers\BaseController;
 use App\Models\Wallet;
 use Illuminate\Http\Request;
-use Illuminate\Http\JsonResponse;
 
-class WalletController extends Controller
+class WalletController extends BaseController
 {
 
     /**
@@ -17,7 +17,7 @@ class WalletController extends Controller
      */
     public function show(Wallet $wallet)
     {
-        return new JsonResponse($wallet->toArray(), 200);
+        return $this->createJsonResponse($wallet->toArray());
     }
 
     /**
@@ -31,7 +31,7 @@ class WalletController extends Controller
     {
         $wallet->update(json_decode($request->getContent() ?? '{}', true));
 
-        return new JsonResponse($wallet->toArray(), 200);
+        return $this->createJsonResponse($wallet->toArray());
     }
 
     /**
@@ -44,6 +44,6 @@ class WalletController extends Controller
     {
         $wallet->delete();
 
-        return new JsonResponse([], 200);
+        return $this->createJsonResponse();
     }
 }
